@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8f89c844-93c3-4e39-8deb-ab79a91a0b11": {
+      "ProjectGuid": "8f89c844-93c3-4e39-8deb-ab79a91a0b11",
+      "DisplayName": "Test57Blocks",
+      "ColorIndex": 0
+    },
+    "e196dbfc-224c-4e73-9aa4-0e65f2fdf275": {
+      "ProjectGuid": "e196dbfc-224c-4e73-9aa4-0e65f2fdf275",
+      "DisplayName": "Test57BlocksTest",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Archivos varios",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}

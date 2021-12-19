@@ -1,0 +1,189 @@
+USE [master]
+GO
+/****** Object:  Database [57Blocks]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+CREATE DATABASE [57Blocks]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'57Blocks', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\57Blocks.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'57Blocks_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\57Blocks_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+ALTER DATABASE [57Blocks] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [57Blocks].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [57Blocks] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [57Blocks] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [57Blocks] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [57Blocks] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [57Blocks] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [57Blocks] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [57Blocks] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [57Blocks] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [57Blocks] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [57Blocks] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [57Blocks] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [57Blocks] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [57Blocks] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [57Blocks] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [57Blocks] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [57Blocks] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [57Blocks] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [57Blocks] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [57Blocks] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [57Blocks] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [57Blocks] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [57Blocks] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [57Blocks] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [57Blocks] SET  MULTI_USER 
+GO
+ALTER DATABASE [57Blocks] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [57Blocks] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [57Blocks] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [57Blocks] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [57Blocks] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [57Blocks] SET QUERY_STORE = OFF
+GO
+USE [57Blocks]
+GO
+/****** Object:  User [Blocks]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+CREATE USER [Blocks] FOR LOGIN [Blocks] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [Blocks]
+GO
+/****** Object:  Table [dbo].[Genres]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Genres](
+	[IdGenre] [int] IDENTITY(1,1) NOT NULL,
+	[GenreName] [nvarchar](100) NOT NULL,
+ CONSTRAINT [PK_Genres] PRIMARY KEY CLUSTERED 
+(
+	[IdGenre] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Movies]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Movies](
+	[IdMovie] [int] IDENTITY(1,1) NOT NULL,
+	[MovieTitle] [nvarchar](500) NOT NULL,
+	[Duration] [int] NOT NULL,
+	[Rating] [int] NOT NULL,
+	[IdGenre] [int] NOT NULL,
+	[IdUser] [int] NOT NULL,
+	[Private] [bit] NOT NULL,
+	[CreationDate] [smalldatetime] NOT NULL,
+	[ModifiedDate] [smalldatetime] NULL,
+	[ModifiedBy] [int] NULL,
+ CONSTRAINT [PK_Movies] PRIMARY KEY CLUSTERED 
+(
+	[IdMovie] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[IdUser] [int] IDENTITY(1,1) NOT NULL,
+	[UserName] [nvarchar](500) NOT NULL,
+	[UserEmail] [nvarchar](500) NOT NULL,
+	[UserPassword] [nvarchar](500) NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[IdUser] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Genres] ON 
+GO
+INSERT [dbo].[Genres] ([IdGenre], [GenreName]) VALUES (1, N'Action')
+GO
+INSERT [dbo].[Genres] ([IdGenre], [GenreName]) VALUES (2, N'Drama')
+GO
+INSERT [dbo].[Genres] ([IdGenre], [GenreName]) VALUES (3, N'Terror')
+GO
+SET IDENTITY_INSERT [dbo].[Genres] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Movies] ON 
+GO
+INSERT [dbo].[Movies] ([IdMovie], [MovieTitle], [Duration], [Rating], [IdGenre], [IdUser], [Private], [CreationDate], [ModifiedDate], [ModifiedBy]) VALUES (2, N'david.olmos07@yahoo.com', 60, 52, 1, 2, 1, CAST(N'2021-12-17T01:18:00' AS SmallDateTime), NULL, NULL)
+GO
+INSERT [dbo].[Movies] ([IdMovie], [MovieTitle], [Duration], [Rating], [IdGenre], [IdUser], [Private], [CreationDate], [ModifiedDate], [ModifiedBy]) VALUES (3, N'david.olmos07@yahoo.com', 60, 52, 1, 2, 1, CAST(N'2021-12-17T01:18:00' AS SmallDateTime), NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[Movies] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Users] ON 
+GO
+INSERT [dbo].[Users] ([IdUser], [UserName], [UserEmail], [UserPassword]) VALUES (1, N'Nombre', N'david.olmos@yahoo.com', N'PAqRXBdooLdccTAM3Ix3ZzsWHV4=')
+GO
+INSERT [dbo].[Users] ([IdUser], [UserName], [UserEmail], [UserPassword]) VALUES (2, N'Nombre', N'david.olmos07@yahoo.com', N'PAqRXBdooLdccTAM3Ix3ZzsWHV4=')
+GO
+SET IDENTITY_INSERT [dbo].[Users] OFF
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [NonClusteredIndex-20211216-223441]    Script Date: 19/12/2021 1:10:15 a. m. ******/
+CREATE NONCLUSTERED INDEX [NonClusteredIndex-20211216-223441] ON [dbo].[Users]
+(
+	[UserEmail] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Movies]  WITH CHECK ADD  CONSTRAINT [FK_Movies_Genres] FOREIGN KEY([IdGenre])
+REFERENCES [dbo].[Genres] ([IdGenre])
+GO
+ALTER TABLE [dbo].[Movies] CHECK CONSTRAINT [FK_Movies_Genres]
+GO
+ALTER TABLE [dbo].[Movies]  WITH CHECK ADD  CONSTRAINT [FK_Movies_Users] FOREIGN KEY([IdUser])
+REFERENCES [dbo].[Users] ([IdUser])
+GO
+ALTER TABLE [dbo].[Movies] CHECK CONSTRAINT [FK_Movies_Users]
+GO
+ALTER TABLE [dbo].[Movies]  WITH CHECK ADD  CONSTRAINT [FK_Movies_Users1] FOREIGN KEY([ModifiedBy])
+REFERENCES [dbo].[Users] ([IdUser])
+GO
+ALTER TABLE [dbo].[Movies] CHECK CONSTRAINT [FK_Movies_Users1]
+GO
+USE [master]
+GO
+ALTER DATABASE [57Blocks] SET  READ_WRITE 
+GO
